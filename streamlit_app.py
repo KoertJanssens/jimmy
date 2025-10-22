@@ -118,6 +118,7 @@ def agent_reply(agent: str, messages: List[Dict[str, str]], model: str, temperat
             return _openai_chat(messages, model=model, temperature=temperature)
         except Exception as e:
             st.warning(f"LLM call failed: {e}. Falling back to offline demo mode.")
+            st.write(f"LLM call failed: {e}. Falling back to offline demo mode.")
             return offline_stub(agent, messages[-1]["content"]) if messages else "[offline demo]"
     else:
         return offline_stub(agent, messages[-1]["content"]) if messages else "[offline demo]"
