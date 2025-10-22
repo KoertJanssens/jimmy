@@ -66,34 +66,22 @@ def use_llm() -> bool:
 
 
 def _openai_chat(messages: List[Dict[str, str]], model: str, temperature: float = 0.7) -> str:
-    """Call OpenAI Chat Completions. Tries the new SDK first, falls back to legacy import."""
+    """Call OpenAI Chat Completions using the modern openai>=1.0.0 SDK."""
     api_key = st.session_state.get("api_key") or os.getenv("OPENAI_API_KEY")
     if not api_key:
         raise RuntimeError("Missing OpenAI API key.")
 
-    # Try new SDK
     try:
-        from openai import OpenAI  # type: ignore
+        from openai import OpenAI  # modern SDK
         client = OpenAI(api_key=api_key)
-        resp = client.chat.completions.create(
+        response = client.chat.completions.create(
             model=model,
             messages=messages,
             temperature=temperature,
         )
-        return resp.choices[0].message.content or ""
-    except Exception:
-        # Fallback: legacy SDK
-        try:
-            import openai as openai_legacy  # type: ignore
-            openai_legacy.api_key = api_key
-            resp = openai_legacy.ChatCompletion.create(
-                model=model,
-                messages=messages,
-                temperature=temperature,
-            )
-            return resp["choices"][0]["message"]["content"]
-        except Exception as e:
-            raise RuntimeError(str(e))
+        return response.choices[0].message.content or ""
+    except Exception as e:
+        raise RuntimeError(f"OpenAI API call failed: {e}")
 
 
 def offline_stub(agent: str, user_text: str) -> str:
