@@ -24,7 +24,7 @@ AGENT_NAMES = {
     "analyst": "Analyst Agent",
 }
 
-DEFAULT_MODEL = "gpt-4o-mini"
+DEFAULT_MODEL = "gpt-5-nano"
 
 INTRO_SYSTEM = (
     "You are a warm, curious intake coach. Your goal is to get to know the user: "
@@ -163,7 +163,7 @@ st.session_state.api_key = st.sidebar.text_input(
 
 st.session_state.model = st.sidebar.selectbox(
     "Model",
-    [DEFAULT_MODEL, "gpt-4o", "gpt-4o-mini", "gpt-4.1-mini"],
+    [DEFAULT_MODEL, "gpt-5-mini", "gpt-5-nano"],
     index=0,
 )
 
