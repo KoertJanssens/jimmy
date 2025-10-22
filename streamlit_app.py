@@ -64,7 +64,6 @@ def use_llm() -> bool:
     return bool(key)
 
 
-_print(f"Use LLM {use_llm()}")
 
 def _openai_chat(messages: List[Dict[str, str]], model: str, temperature: float = 0.7) -> str:
     """Call OpenAI Chat Completions. Tries the new SDK first, falls back to legacy import."""
@@ -120,10 +119,11 @@ def offline_stub(agent: str, user_text: str) -> str:
 def agent_reply(agent: str, messages: List[Dict[str, str]], model: str, temperature: float) -> str:
     if use_llm():
         try:
+            _print("Trying OpenAI chat")
             return _openai_chat(messages, model=model, temperature=temperature)
         except Exception as e:
+            _print(f"LLM call failed: {e}. Falling back to offline demo mode.")
             st.warning(f"LLM call failed: {e}. Falling back to offline demo mode.")
-            st.write(f"LLM call failed: {e}. Falling back to offline demo mode.")
             return offline_stub(agent, messages[-1]["content"]) if messages else "[offline demo]"
     else:
         return offline_stub(agent, messages[-1]["content"]) if messages else "[offline demo]"
