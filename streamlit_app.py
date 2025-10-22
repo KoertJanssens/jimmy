@@ -6,6 +6,9 @@ from typing import List, Dict, Any
 
 import streamlit as st
 
+def _print(string):
+    print(string, flush=True)
+
 # -----------------------------
 # App Config
 # -----------------------------
@@ -60,6 +63,8 @@ def use_llm() -> bool:
     key = st.session_state.get("api_key") or os.getenv("OPENAI_API_KEY")
     return bool(key)
 
+
+_print(f"Use LLM {use_llm()}")
 
 def _openai_chat(messages: List[Dict[str, str]], model: str, temperature: float = 0.7) -> str:
     """Call OpenAI Chat Completions. Tries the new SDK first, falls back to legacy import."""
