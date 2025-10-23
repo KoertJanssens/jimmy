@@ -37,8 +37,8 @@ INTRO_SYSTEM = (
 
 SCENARIO_SYSTEM = (
     "You are a playful guide who places the user in a realistic, randomly selected scenario "
-    "that helps them explore their reactions and preferences. Facilitate reflection with short, "
-    "clear prompts. Keep replies under 120 words."
+    "that helps them explore their reactions and preferences. "
+    "Ask multiple-choice options and give them 3-5 possible options. Keep replies under 120 words."
 )
 
 ANALYST_SYSTEM = (
