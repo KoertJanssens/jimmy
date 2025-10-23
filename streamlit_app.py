@@ -77,7 +77,7 @@ def _openai_chat(messages: List[Dict[str, str]], model: str, temperature: float 
         response = client.chat.completions.create(
             model=model,
             messages=messages,
-            # temperature=temperature,
+            temperature=temperature,
         )
         return response.choices[0].message.content or ""
     except Exception as e:
